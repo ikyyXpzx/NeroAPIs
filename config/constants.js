@@ -1,30 +1,39 @@
-// config/constants.js
+// config/api-config.js
 module.exports = {
-    API_PATHS: {
-        AI: {
-            GEMINI: '/ai/gemini',
-            GEMINI_SYSTEM: '/ai/geminiwithsysteminstruction'
-        },
-        DOWNLOADER: {
-            VIDEOY: '/downloader/videy',
-            THREADS: '/downloader/threads'
-        },
-        TOOLS: {
-            SSWEB_PC: '/tools/ssweb-pc',
-            SSWEB_HP: '/tools/ssweb-hp'
-        }
+    title: "NeroAPIs",
+    favicon: "https://raw.githubusercontent.com/upload-file-lab/fileupload7/main/uploads/1764494355026.jpeg?format=png&name=900x900",
+    logo: "https://raw.githubusercontent.com/upload-file-lab/fileupload7/main/uploads/1764494355026.jpeg",
+    headertitle: "NeroAPIs",
+    headerdescription: "Powerful API Collection for Developers",
+    footer: "© 2025 NeroAPIs",
+    
+    // Animation settings
+    animations: {
+        enabled: true,
+        duration: 0.5,
+        easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
     },
-    ERROR_MESSAGES: {
-        MISSING_PARAMS: "Missing required parameters",
-        INVALID_URL: "Invalid URL parameter",
-        SERVER_ERROR: "Internal server error",
-        API_KEY_REQUIRED: "API key is required"
+    
+    // Social links
+    social: {
+        github: "https://github.com/neroapis",
+        telegram: "https://t.me/NeroAPIs",
+        whatsapp: "https://whatsapp.com/channel/0029VaoJb11LikgEpNpBty0e",
+        instagram: "https://www.instagram.com/neroapis/",
+        youtube: "https://www.youtube.com/@neroapis"
     },
-    HTTP_STATUS: {
-        OK: 200,
-        BAD_REQUEST: 400,
-        UNAUTHORIZED: 401,
-        NOT_FOUND: 404,
-        INTERNAL_ERROR: 500
+    
+    // API info
+    apiInfo: {
+        version: "1.0.0",
+        baseUrl: "/api",
+        status: "active",
+        features: [
+            "Smooth Animations",
+            "Glass Morphism Design",
+            "Real-time Battery Detection",
+            "Interactive API Testing",
+            "Responsive Design"
+        ]
     }
 };
