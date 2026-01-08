@@ -8,8 +8,7 @@ const RESOLUTION_PRESETS = {
     'laptop': { width: 1366, height: 768, device: 'Laptop (16:9)' },
     'tablet': { width: 768, height: 1024, device: 'Tablet (3:4)' },
     'mobile': { width: 375, height: 667, device: 'Mobile (9:16)' },
-    'mobile-large': { width: 414, height: 896, device: 'Mobile Large (9:19.5)' },
-    'custom': { width: 1280, height: 720, device: 'Custom' }
+    'mobile-large': { width: 414, height: 896, device: 'Mobile Large (9:19.5)' }
 };
 
 async function takeScreenshot(url, options = {}) {
