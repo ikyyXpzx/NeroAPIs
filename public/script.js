@@ -1,4 +1,4 @@
-// public/script.js - FULL UPDATED CODE
+// public/script.js - FULL UPDATED CODE WITH DROPDOWN
 const BASE_URL = window.location.origin;
 let isRequestInProgress = false;
 let apiData = null;
@@ -365,8 +365,8 @@ function createMediaPreview(url, contentType) {
     return previewHtml;
 }
 
-// Function to create device selector
-function createDeviceSelector(catIdx, epIdx) {
+// Function to create device selector dropdown
+function createDeviceSelectorDropdown(catIdx, epIdx) {
     const devicePresets = [
         { value: 'pc', label: 'Desktop (1280×720)', icon: '💻' },
         { value: 'laptop', label: 'Laptop (1366×768)', icon: '💻' },
@@ -381,88 +381,146 @@ function createDeviceSelector(catIdx, epIdx) {
     let html = `
         <div class="mb-4">
             <label class="block text-sm font-medium ${isLightMode ? 'text-gray-700' : 'text-gray-300'} mb-2">
-                📱 Device Preset
+                📱 Select Device Preset
             </label>
-            <div class="flex flex-wrap gap-2 mb-3" id="device-selector-${catIdx}-${epIdx}">
+            
+            <!-- Main Dropdown Button -->
+            <div class="relative">
+                <button type="button" 
+                    onclick="toggleDeviceDropdown(${catIdx}, ${epIdx})"
+                    class="dropdown-main-btn w-full px-4 py-3 rounded-lg border transition-all text-sm flex items-center justify-between"
+                    id="dropdown-main-${catIdx}-${epIdx}">
+                    <div class="flex items-center gap-3">
+                        <span class="text-lg" id="dropdown-icon-${catIdx}-${epIdx}">💻</span>
+                        <span id="dropdown-label-${catIdx}-${epIdx}">Desktop (1280×720)</span>
+                    </div>
+                    <svg class="w-4 h-4 transition-transform duration-300" id="dropdown-arrow-${catIdx}-${epIdx}" 
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                
+                <!-- Dropdown Menu -->
+                <div id="dropdown-menu-${catIdx}-${epIdx}" 
+                     class="dropdown-menu absolute z-10 w-full mt-1 hidden rounded-lg border shadow-lg overflow-hidden">
+                    <div class="py-1 max-h-60 overflow-y-auto">
     `;
     
     devicePresets.forEach(preset => {
         html += `
-            <button type="button" 
-                onclick="selectDevice(${catIdx}, ${epIdx}, '${preset.value}')"
-                class="device-preset-btn px-3 py-2 rounded-lg border transition-all text-xs flex items-center gap-1 ${isLightMode ? 'bg-gray-100 border-gray-300 text-gray-800' : 'bg-gray-800 border-gray-700 text-gray-300'}"
-                data-device="${preset.value}"
-                id="device-btn-${catIdx}-${epIdx}-${preset.value}">
-                ${preset.icon} ${preset.label}
+            <button type="button"
+                onclick="selectDeviceFromDropdown(${catIdx}, ${epIdx}, '${preset.value}', '${preset.label}', '${preset.icon}')"
+                class="dropdown-item w-full px-4 py-3 text-left flex items-center gap-3 hover:bg-opacity-50 transition-all"
+                data-device="${preset.value}">
+                <span class="text-lg">${preset.icon}</span>
+                <span>${preset.label}</span>
             </button>
         `;
     });
     
     html += `
-            </div>
-        </div>
-        
-        <div id="custom-resolution-${catIdx}-${epIdx}" class="hidden mb-4">
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-sm font-medium ${isLightMode ? 'text-gray-700' : 'text-gray-300'} mb-2">
-                        Width (px)
-                    </label>
-                    <input type="number" 
-                        id="custom-width-${catIdx}-${epIdx}"
-                        class="search-input w-full px-4 py-2 rounded-lg focus:outline-none focus:border-blue-500 code-font text-sm"
-                        placeholder="e.g., 1920"
-                        min="100"
-                        max="5000"
-                        value="1280">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium ${isLightMode ? 'text-gray-700' : 'text-gray-300'} mb-2">
-                        Height (px)
-                    </label>
-                    <input type="number" 
-                        id="custom-height-${catIdx}-${epIdx}"
-                        class="search-input w-full px-4 py-2 rounded-lg focus:outline-none focus:border-blue-500 code-font text-sm"
-                        placeholder="e.g., 720"
-                        min="100"
-                        max="5000"
-                        value="720">
+                    </div>
                 </div>
             </div>
-            <p class="text-xs ${isLightMode ? 'text-gray-500' : 'text-gray-400'} mt-1">
-                Enter custom width and height in pixels
-            </p>
+            
+            <!-- Custom Resolution Inputs (Hidden by default) -->
+            <div id="custom-resolution-${catIdx}-${epIdx}" class="hidden mt-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-sm font-medium ${isLightMode ? 'text-gray-700' : 'text-gray-300'} mb-2">
+                            Width (px)
+                        </label>
+                        <input type="number" 
+                            id="custom-width-${catIdx}-${epIdx}"
+                            class="search-input w-full px-4 py-2 rounded-lg focus:outline-none focus:border-blue-500 code-font text-sm"
+                            placeholder="e.g., 1920"
+                            min="100"
+                            max="5000"
+                            value="1280">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium ${isLightMode ? 'text-gray-700' : 'text-gray-300'} mb-2">
+                            Height (px)
+                        </label>
+                        <input type="number" 
+                            id="custom-height-${catIdx}-${epIdx}"
+                            class="search-input w-full px-4 py-2 rounded-lg focus:outline-none focus:border-blue-500 code-font text-sm"
+                            placeholder="e.g., 720"
+                            min="100"
+                            max="5000"
+                            value="720">
+                    </div>
+                </div>
+                <p class="text-xs ${isLightMode ? 'text-gray-500' : 'text-gray-400'} mt-1">
+                    Enter custom width and height in pixels
+                </p>
+            </div>
+            
+            <input type="hidden" name="device" id="selected-device-${catIdx}-${epIdx}" value="pc">
         </div>
-        
-        <input type="hidden" name="device" id="selected-device-${catIdx}-${epIdx}" value="pc">
     `;
     
     return html;
 }
 
-// Function to handle device selection
-function selectDevice(catIdx, epIdx, device) {
-    const isLightMode = body.classList.contains('light-mode');
+// Function to toggle dropdown menu
+function toggleDeviceDropdown(catIdx, epIdx) {
+    const dropdownMenu = document.getElementById(`dropdown-menu-${catIdx}-${epIdx}`);
+    const dropdownArrow = document.getElementById(`dropdown-arrow-${catIdx}-${epIdx}`);
+    const mainButton = document.getElementById(`dropdown-main-${catIdx}-${epIdx}`);
     
-    // Update button styles
-    const deviceButtons = document.querySelectorAll(`#device-selector-${catIdx}-${epIdx} .device-preset-btn`);
-    deviceButtons.forEach(btn => {
-        btn.classList.remove('nero-btn', 'selected');
-        btn.classList.add(isLightMode ? 'bg-gray-100 border-gray-300 text-gray-800' : 'bg-gray-800 border-gray-700 text-gray-300');
+    const isOpen = !dropdownMenu.classList.contains('hidden');
+    
+    // Toggle menu visibility
+    if (isOpen) {
+        dropdownMenu.classList.add('hidden');
+        dropdownArrow.style.transform = 'rotate(0deg)';
+        mainButton.classList.remove('dropdown-open');
+    } else {
+        dropdownMenu.classList.remove('hidden');
+        dropdownArrow.style.transform = 'rotate(180deg)';
+        mainButton.classList.add('dropdown-open');
+        
+        // Close other open dropdowns
+        closeAllOtherDropdowns(catIdx, epIdx);
+    }
+}
+
+// Function to close all other dropdowns
+function closeAllOtherDropdowns(currentCatIdx, currentEpIdx) {
+    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        if (!menu.id.includes(`${currentCatIdx}-${currentEpIdx}`)) {
+            menu.classList.add('hidden');
+        }
     });
     
-    // Highlight selected button
-    const selectedBtn = document.getElementById(`device-btn-${catIdx}-${epIdx}-${device}`);
-    if (selectedBtn) {
-        selectedBtn.classList.remove(isLightMode ? 'bg-gray-100 border-gray-300 text-gray-800' : 'bg-gray-800 border-gray-700 text-gray-300');
-        selectedBtn.classList.add('nero-btn', 'selected');
-    }
+    document.querySelectorAll('.dropdown-main-btn').forEach(btn => {
+        if (!btn.id.includes(`${currentCatIdx}-${currentEpIdx}`)) {
+            btn.classList.remove('dropdown-open');
+        }
+    });
+    
+    document.querySelectorAll('[id^="dropdown-arrow-"]').forEach(arrow => {
+        if (!arrow.id.includes(`${currentCatIdx}-${currentEpIdx}`)) {
+            arrow.style.transform = 'rotate(0deg)';
+        }
+    });
+}
+
+// Function to select device from dropdown
+function selectDeviceFromDropdown(catIdx, epIdx, device, label, icon) {
+    // Update dropdown button text
+    document.getElementById(`dropdown-label-${catIdx}-${epIdx}`).textContent = label;
+    document.getElementById(`dropdown-icon-${catIdx}-${epIdx}`).textContent = icon;
     
     // Update hidden input
     const deviceInput = document.getElementById(`selected-device-${catIdx}-${epIdx}`);
     if (deviceInput) {
         deviceInput.value = device;
     }
+    
+    // Close dropdown
+    toggleDeviceDropdown(catIdx, epIdx);
     
     // Show/hide custom resolution inputs
     const customResolutionDiv = document.getElementById(`custom-resolution-${catIdx}-${epIdx}`);
@@ -523,23 +581,50 @@ function updateScreenshotForm(catIdx, epIdx, device) {
     }
 }
 
-// Function to initialize device selectors
-function initializeDeviceSelectors() {
-    // Find all screenshot forms and initialize device selector
-    document.querySelectorAll('form').forEach(form => {
-        if (form.id.includes('form-')) {
-            const ids = form.id.split('-');
-            if (ids.length >= 3) {
-                const catIdx = parseInt(ids[1]);
-                const epIdx = parseInt(ids[2]);
-                
-                // Check if this is a screenshot endpoint by form action
-                const formAction = form.getAttribute('onsubmit');
-                if (formAction && formAction.includes('/tools/ssweb')) {
-                    // Set default device to PC
-                    setTimeout(() => selectDevice(catIdx, epIdx, 'pc'), 100);
-                }
-            }
+// Function to initialize dropdowns after page load
+function initializeDeviceDropdowns() {
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.dropdown-main-btn') && !event.target.closest('.dropdown-menu')) {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.classList.add('hidden');
+            });
+            
+            document.querySelectorAll('.dropdown-main-btn').forEach(btn => {
+                btn.classList.remove('dropdown-open');
+            });
+            
+            document.querySelectorAll('[id^="dropdown-arrow-"]').forEach(arrow => {
+                arrow.style.transform = 'rotate(0deg)';
+            });
+        }
+    });
+    
+    // Initialize default selection
+    document.querySelectorAll('.dropdown-main-btn').forEach(btn => {
+        const id = btn.id;
+        const ids = id.split('-');
+        if (ids.length >= 4) {
+            const catIdx = parseInt(ids[2]);
+            const epIdx = parseInt(ids[3]);
+            selectDeviceFromDropdown(catIdx, epIdx, 'pc', 'Desktop (1280×720)', '💻');
+        }
+    });
+    
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.classList.add('hidden');
+            });
+            
+            document.querySelectorAll('.dropdown-main-btn').forEach(btn => {
+                btn.classList.remove('dropdown-open');
+            });
+            
+            document.querySelectorAll('[id^="dropdown-arrow-"]').forEach(arrow => {
+                arrow.style.transform = 'rotate(0deg)';
+            });
         }
     });
 }
@@ -804,8 +889,8 @@ function loadApis() {
                 
                 // Check if this is the screenshot endpoint
                 if (path.includes('/tools/ssweb')) {
-                    // Add device selector for screenshot endpoint
-                    html += createDeviceSelector(catIdx, epIdx);
+                    // Add device selector dropdown for screenshot endpoint
+                    html += createDeviceSelectorDropdown(catIdx, epIdx);
                     
                     // Add URL input
                     html += `
@@ -1000,8 +1085,8 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('API data loaded successfully:', data.categories.length, 'categories');
             loadApis();
             
-            // Initialize device selectors after loading APIs
-            setTimeout(initializeDeviceSelectors, 300);
+            // Initialize device dropdowns after loading APIs
+            setTimeout(initializeDeviceDropdowns, 300);
         })
         .catch(err => {
             console.error('Error loading API data:', err);
