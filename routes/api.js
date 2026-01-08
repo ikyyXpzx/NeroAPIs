@@ -16,9 +16,9 @@ router.get('/ai/geminiwithsysteminstruction', geminiAI.geminiWithSystem);
 router.get('/downloader/videy', videyDownloader.videyDownload);
 router.get('/downloader/threads', threadsDownloader.threadsDownload);
 
-// Tools Endpoints
-router.get('/tools/ssweb-pc', sswebTools.screenshotPC);
-router.get('/tools/ssweb-hp', sswebTools.screenshotMobile);
+// Tools Endpoints - SSWeb sekarang hanya 1 endpoint
+router.get('/tools/ssweb', sswebTools.screenshot);
+router.get('/tools/ssweb/resolutions', sswebTools.getResolutions);
 
 // Health check endpoint
 router.get('/health', (req, res) => {
@@ -39,7 +39,7 @@ router.get('/info', (req, res) => {
         endpoints: {
             ai: ['/ai/gemini', '/ai/geminiwithsysteminstruction'],
             downloader: ['/downloader/videy', '/downloader/threads'],
-            tools: ['/tools/ssweb-pc', '/tools/ssweb-hp']
+            tools: ['/tools/ssweb', '/tools/ssweb/resolutions']
         },
         documentation: '/listapi.json'
     });
