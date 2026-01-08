@@ -75,28 +75,40 @@
       "description": "Web tools and utilities",
       "items": [
         {
-          "name": "SCREENSHOT WEB PC (16:9)",
-          "path": "/api/tools/ssweb-pc?url=",
-          "desc": "Take website screenshots in 16:9 aspect ratio",
+          "name": "SCREENSHOT WEB",
+          "path": "/api/tools/ssweb?url=&device=pc&width=&height=",
+          "desc": "Take website screenshots with device presets or custom resolution",
           "status": "ready",
           "category": "Tools",
           "method": "GET",
           "params": {
-            "url": "Website URL (required, must start with https://)"
+            "url": "Website URL (required, must start with https://)",
+            "device": "Device preset: pc, laptop, tablet, mobile, mobile-large (optional)",
+            "width": "Custom width in pixels (optional, requires height)",
+            "height": "Custom height in pixels (optional, requires width)"
           },
-          "example": "/api/tools/ssweb-pc?url=https://example.com"
+          "examples": [
+            "/api/tools/ssweb?url=https://example.com&device=pc",
+            "/api/tools/ssweb?url=https://example.com&device=mobile",
+            "/api/tools/ssweb?url=https://example.com&width=1920&height=1080"
+          ],
+          "device_presets": {
+            "pc": "1280x720 (Desktop 16:9)",
+            "laptop": "1366x768 (Laptop 16:9)",
+            "tablet": "768x1024 (Tablet 3:4)",
+            "mobile": "375x667 (Mobile 9:16)",
+            "mobile-large": "414x896 (Mobile Large 9:19.5)"
+          }
         },
         {
-          "name": "SCREENSHOT WEB HP (9:16)",
-          "path": "/api/tools/ssweb-hp?url=",
-          "desc": "Take website screenshots in 9:16 aspect ratio",
+          "name": "GET RESOLUTION PRESETS",
+          "path": "/api/tools/ssweb/resolutions",
+          "desc": "Get available screenshot resolution presets",
           "status": "ready",
           "category": "Tools",
           "method": "GET",
-          "params": {
-            "url": "Website URL (required, must start with https://)"
-          },
-          "example": "/api/tools/ssweb-hp?url=https://example.com"
+          "params": {},
+          "example": "/api/tools/ssweb/resolutions"
         }
       ]
     }
