@@ -76,39 +76,28 @@
       "items": [
         {
           "name": "SCREENSHOT WEB",
-          "path": "/api/tools/ssweb?url=&device=pc&width=&height=",
+          "path": "/api/tools/ssweb?url=&device=pc",
           "desc": "Take website screenshots with device presets or custom resolution",
           "status": "ready",
           "category": "Tools",
           "method": "GET",
           "params": {
             "url": "Website URL (required, must start with https://)",
-            "device": "Device preset: pc, laptop, tablet, mobile, mobile-large (optional)",
-            "width": "Custom width in pixels (optional, requires height)",
-            "height": "Custom height in pixels (optional, requires width)"
+            "device": "Device preset: pc, laptop, tablet, mobile, mobile-large, custom"
           },
           "examples": [
             "/api/tools/ssweb?url=https://example.com&device=pc",
             "/api/tools/ssweb?url=https://example.com&device=mobile",
-            "/api/tools/ssweb?url=https://example.com&width=1920&height=1080"
+            "/api/tools/ssweb?url=https://example.com&device=custom&width=1920&height=1080"
           ],
           "device_presets": {
-            "pc": "1280x720 (Desktop 16:9)",
-            "laptop": "1366x768 (Laptop 16:9)",
-            "tablet": "768x1024 (Tablet 3:4)",
-            "mobile": "375x667 (Mobile 9:16)",
-            "mobile-large": "414x896 (Mobile Large 9:19.5)"
+            "pc": "1280×720 (Desktop 16:9)",
+            "laptop": "1366×768 (Laptop 16:9)",
+            "tablet": "768×1024 (Tablet 3:4)",
+            "mobile": "375×667 (Mobile 9:16)",
+            "mobile-large": "414×896 (Mobile Large 9:19.5)",
+            "custom": "Custom resolution"
           }
-        },
-        {
-          "name": "GET RESOLUTION PRESETS",
-          "path": "/api/tools/ssweb/resolutions",
-          "desc": "Get available screenshot resolution presets",
-          "status": "ready",
-          "category": "Tools",
-          "method": "GET",
-          "params": {},
-          "example": "/api/tools/ssweb/resolutions"
         }
       ]
     }
@@ -118,7 +107,7 @@
     "website": "https://neroapis.vercel.app",
     "repository": "https://github.com/neroapis/neroapis",
     "license": "MIT",
-    "totalEndpoints": 6,
+    "totalEndpoints": 5,
     "totalCategories": 3
   }
 }
