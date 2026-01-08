@@ -1,0 +1,112 @@
+{
+  "name": "NeroAPIs",
+  "version": "1.0.0",
+  "description": "Powerful API Collection for Developers",
+  "baseUrl": "/api",
+  "categories": [
+    {
+      "name": "AI API ENDPOINT",
+      "icon": "🤖",
+      "description": "Artificial Intelligence endpoints",
+      "items": [
+        {
+          "name": "GEMINI AI CHAT",
+          "path": "/api/ai/gemini?text=&apikey=",
+          "desc": "Chat with Google's Gemini AI",
+          "status": "ready",
+          "category": "AI",
+          "method": "GET",
+          "params": {
+            "text": "Input text for Gemini (required)",
+            "apikey": "Your Gemini API key (required)"
+          },
+          "example": "/api/ai/gemini?text=Hello&apikey=YOUR_API_KEY"
+        },
+        {
+          "name": "GEMINI CHAT WITH SYSTEM INSTRUCTION",
+          "path": "/api/ai/geminiwithsysteminstruction?text=&system=&apikey=",
+          "desc": "Gemini AI with custom system instructions",
+          "status": "ready",
+          "category": "AI",
+          "method": "GET",
+          "params": {
+            "text": "Input text (required)",
+            "system": "System instruction (required)",
+            "apikey": "Your Gemini API key (required)"
+          },
+          "example": "/api/ai/geminiwithsysteminstruction?text=Hello&system=You are a helpful assistant&apikey=YOUR_API_KEY"
+        }
+      ]
+    },
+    {
+      "name": "DOWNLOADER API ENDPOINT",
+      "icon": "⬇️",
+      "description": "Media downloader endpoints",
+      "items": [
+        {
+          "name": "VIDEY DOWNLOADER",
+          "path": "/api/downloader/videy?url=",
+          "desc": "Download videos from videy.co",
+          "status": "ready",
+          "category": "Downloader",
+          "method": "GET",
+          "params": {
+            "url": "Videy video URL (required)"
+          },
+          "example": "/api/downloader/videy?url=https://videy.co/watch?v=video_id"
+        },
+        {
+          "name": "THREADS DOWNLOADER",
+          "path": "/api/downloader/threads?url=",
+          "desc": "Download media from Threads",
+          "status": "ready",
+          "category": "Downloader",
+          "method": "GET",
+          "params": {
+            "url": "Threads post URL (required)"
+          },
+          "example": "/api/downloader/threads?url=https://www.threads.net/t/Cx5XxXxXxXx"
+        }
+      ]
+    },
+    {
+      "name": "TOOLS API ENDPOINT",
+      "icon": "🔧",
+      "description": "Web tools and utilities",
+      "items": [
+        {
+          "name": "SCREENSHOT WEB PC (16:9)",
+          "path": "/api/tools/ssweb-pc?url=",
+          "desc": "Take website screenshots in 16:9 aspect ratio",
+          "status": "ready",
+          "category": "Tools",
+          "method": "GET",
+          "params": {
+            "url": "Website URL (required, must start with https://)"
+          },
+          "example": "/api/tools/ssweb-pc?url=https://example.com"
+        },
+        {
+          "name": "SCREENSHOT WEB HP (9:16)",
+          "path": "/api/tools/ssweb-hp?url=",
+          "desc": "Take website screenshots in 9:16 aspect ratio",
+          "status": "ready",
+          "category": "Tools",
+          "method": "GET",
+          "params": {
+            "url": "Website URL (required, must start with https://)"
+          },
+          "example": "/api/tools/ssweb-hp?url=https://example.com"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "author": "NeroAPIs Team",
+    "website": "https://neroapis.vercel.app",
+    "repository": "https://github.com/neroapis/neroapis",
+    "license": "MIT",
+    "totalEndpoints": 6,
+    "totalCategories": 3
+  }
+}
